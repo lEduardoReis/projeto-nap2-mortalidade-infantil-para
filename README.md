@@ -1,6 +1,6 @@
 # Projeto NAP2 — Mortalidade Infantil no Pará
 
-Este projeto foi desenvolvido como parte da entrega final da NAP2 da disciplina de Ciência de Dados. O objetivo é analisar a mortalidade infantil no estado do Pará a partir da integração das bases SIM e SINASC, utilizando técnicas de aprendizado de máquina, interpretabilidade, visualização de dados e deploy com Streamlit.
+Este projeto foi desenvolvido como parte da entrega final da NAP2 da disciplina de Ciência de Dados II. O objetivo é analisar a mortalidade infantil no estado do Pará a partir da integração das bases SIM e SINASC, utilizando técnicas de aprendizado de máquina, interpretabilidade, visualização de dados e deploy com Streamlit.
 
 ## Tema do projeto
 
@@ -10,36 +10,107 @@ Este projeto foi desenvolvido como parte da entrega final da NAP2 da disciplina 
 
 O projeto tem como objetivo integrar dados públicos de nascimento e óbito infantil, construir uma base analítica, aplicar modelagem preditiva com XGBoost, interpretar os fatores associados com SHAP e disponibilizar os resultados em um dashboard interativo.
 
-## Principais funcionalidades
 
-O dashboard em Streamlit possui as seguintes seções:
+A proposta busca apoiar a análise da mortalidade infantil no Pará por meio de indicadores, visualizações, avaliação preditiva e storytelling orientado à tomada de decisão em saúde pública.
 
-* Visão geral da base;
-* Modelo preditivo e avaliação;
-* Fatores associados e interpretabilidade com SHAP;
-* Causas de óbito infantil;
-* Análise territorial por município;
-* Simulador de risco;
-* Arquitetura de dados e MLOps;
-* Ética e limitações.
+## Integrantes
+
+- Eduardo Gabriel Reis Farias
+- Bredson Jonh Cordeiro do Nascimento
+
+Universidade Federal Rural da Amazônia — UFRA  
+Disciplina: Ciência de Dados II
+
+## Bases de dados utilizadas
+
+O projeto utiliza dados públicos dos sistemas de informação em saúde:
+
+- **SINASC** — Sistema de Informações sobre Nascidos Vivos;
+- **SIM** — Sistema de Informações sobre Mortalidade.
+
+As bases foram obtidas a partir do DATASUS e tratadas para construção de uma base integrada com foco na análise da mortalidade infantil no estado do Pará.
+
+## Pipeline do projeto
+
+O projeto segue um pipeline completo de ciência de dados:
+
+1. Definição do problema;
+2. Coleta dos dados;
+3. Tratamento e padronização das bases SIM e SINASC;
+4. Integração das bases;
+5. Criação da variável-alvo `obito_infantil`;
+6. Engenharia de atributos;
+7. Modelagem preditiva;
+8. Avaliação do modelo;
+9. Interpretabilidade com SHAP;
+10. Deploy em Streamlit;
+11. Monitoramento, ética e análise crítica.
+
+## Notebook do projeto
+
+As etapas de tratamento, integração, análise exploratória e modelagem foram desenvolvidas em notebook no Google Colab.
+
+Acesse o notebook principal:
+
+[Notebook no Google Colab](https://colab.research.google.com/drive/1aVUTYXWfDEtdnJsnfY8AD8Zd5sPQDily?usp=sharing)
+
+O notebook contém as seguintes etapas:
+
+- Carregamento das bases SIM e SINASC;
+- Tratamento e padronização das variáveis;
+- Integração das bases;
+- Criação da variável-alvo `obito_infantil`;
+- Análise exploratória dos dados;
+- Treinamento e avaliação do modelo XGBoost;
+- Geração dos arquivos utilizados no Streamlit, como modelo salvo, colunas do modelo e gráfico SHAP.
 
 ## Modelo final
 
 O modelo final adotado foi o **XGBoost V2**, utilizado para classificação binária da variável-alvo `obito_infantil`.
 
+O modelo foi escolhido por sua capacidade de trabalhar com dados estruturados, lidar com relações não lineares e apresentar bom desempenho em problemas de classificação com bases desbalanceadas.
+
 Principais resultados do modelo:
 
-* AUC-ROC: 0,80;
-* Acurácia: 0,841;
-* Precision da classe óbito infantil: 0,054;
-* Recall da classe óbito infantil: 0,642;
-* F1-score da classe óbito infantil: 0,099;
-* Average Precision: 0,101.
+- AUC-ROC: 0,80;
+- Acurácia: 0,841;
+- Precision da classe óbito infantil: 0,054;
+- Recall da classe óbito infantil: 0,642;
+- F1-score da classe óbito infantil: 0,099;
+- Average Precision: 0,101.
+
+## Interpretabilidade
+
+Para interpretação do modelo, foi utilizada a técnica **SHAP (SHapley Additive exPlanations)**.
+
+A análise SHAP permitiu identificar os principais fatores associados às predições do modelo, entre eles:
+
+- Peso ao nascer;
+- Duração da gestação;
+- Sexo do recém-nascido;
+- Idade materna;
+- Município de residência.
+
+Esses fatores foram interpretados de forma crítica, considerando que a influência no modelo não representa, isoladamente, relação causal.
+
+## Dashboard em Streamlit
+
+O dashboard desenvolvido em Streamlit apresenta as seguintes seções:
+
+- Visão geral da base;
+- Modelo preditivo e avaliação;
+- Fatores associados e interpretabilidade com SHAP;
+- Causas de óbito infantil;
+- Análise territorial por município;
+- Simulador de risco;
+- Projeção demonstrativa 2025/2026;
+- Arquitetura de dados e MLOps;
+- Ética, limitações e monitoramento.
 
 ## Estrutura do projeto
 
 ```text
-Projeto_NAP2/
+projeto-nap2-mortalidade-infantil-para/
 │
 ├── app.py
 ├── README.md
@@ -60,7 +131,20 @@ Projeto_NAP2/
 │
 └── scripts/
     └── testar_cenarios.py
-```
+
+#Pré-requisitos
+
+Para executar o projeto em outra máquina, é necessário ter instalado:
+
+Python 3.12 ou versão compatível;
+Git;
+Navegador de internet;
+VS Code ou outro editor de código, opcional.
+
+No Windows, durante a instalação do Python, recomenda-se marcar a opção:
+
+Add Python to PATH
+
 
 ## Como clonar e executar o projeto
 
@@ -77,8 +161,6 @@ Depois entre na pasta do projeto:
 ```bash
 cd Projeto_NAP2
 ```
-
-> Substitua `LINK_DO_REPOSITORIO` pelo link real do repositório no GitHub.
 
 ## 2. Criar ambiente virtual
 
