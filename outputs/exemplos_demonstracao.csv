@@ -1,0 +1,10 @@
+﻿ano_nasc,mes_nasc,municipio_codigo,municipio_nome,sexo,peso,idade_mae,escolaridade_mae,filhos_vivos,filhos_mortos,gestacao,gravidez,parto,probabilidade_%,faixa
+2024,1,150210,Cametá,masculino,alto,35-49,alta,7+,4-6,pos-termo,multipla,ignorado,2.03,Baixa
+2024,1,150210,Cametá,masculino,alto,35-49,ignorado,7+,4-6,pos-termo,multipla,ignorado,2.03,Baixa
+2023,1,150210,Cametá,feminino,alto,50+,media,7+,4-6,pos-termo,ignorado,ignorado,2.16,Baixa
+2023,6,150210,Cametá,feminino,alto,20-34,media,ignorado,7+,ignorado,multipla,ignorado,5.0,Moderada
+2023,6,150240,Castanhal,masculino,alto,menor_20,media,1-3,0,ignorado,unica,ignorado,5.0,Moderada
+2024,6,150420,Marabá,feminino,alto,50+,media,ignorado,0,pre-termo,multipla,ignorado,5.0,Moderada
+2024,6,150140,Belém,ignorado,baixo,menor_20,alta,1-3,7+,pre-termo,multipla,normal,97.92,Elevada
+2023,6,150360,Itaituba,ignorado,baixo,20-34,alta,ignorado,4-6,pre-termo,multipla,normal,97.86,Elevada
+2024,6,150360,Itaituba,ignorado,baixo,20-34,baixa,4-6,0,pre-termo,ignorado,normal,97.61,Elevada

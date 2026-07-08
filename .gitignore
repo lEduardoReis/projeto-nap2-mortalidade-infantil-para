@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+#.env
+
+# Arquivos grandes, se necessário
+data/base_modelagem.parquet
+outputs/cenarios_testados.csv
