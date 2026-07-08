@@ -10,11 +10,54 @@ import os
 # CONFIGURAÇÃO DA PÁGINA
 # =====================================================
 
+# =====================================================
+# CONFIGURAÇÃO DA PÁGINA
+# =====================================================
+
 st.set_page_config(
     page_title="Mortalidade Infantil no Pará",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
+
+# Estilo visual leve e seguro
+st.markdown(
+    """
+    <style>
+        .block-container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            padding-left: 3rem;
+            padding-right: 3rem;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+        }
+
+        h2, h3 {
+            font-weight: 650;
+        }
+
+        .stMetric {
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        div[data-testid="stDataFrame"] {
+            border-radius: 10px;
+        }
+
+        section[data-testid="stSidebar"] {
+            padding-top: 1rem;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 municipios_para = {
     "150125": "Bannach",
     "150010": "Abaetetuba",
@@ -1660,8 +1703,9 @@ elif pagina == "Simulador de risco":
         Sua finalidade é demonstrar o funcionamento do modelo final dentro de um sistema interativo.
         """
     )
+
 # =====================================================
-# PÁGINA 7 — ARQUITETURA E MLOPS
+# PÁGINA 8 — ARQUITETURA E MLOPS
 # =====================================================
 
 elif pagina == "Arquitetura e MLOps":
@@ -1905,42 +1949,214 @@ Projeto_NAP2/
         """
     )
 # =====================================================
-# PÁGINA 7 — ÉTICA E LIMITAÇÕES
+# PÁGINA 9 — ÉTICA, LIMITAÇÕES E MONITORAMENTO
 # =====================================================
 
 elif pagina == "Ética e limitações":
 
-    st.header("6. Governança, ética e limitações")
+    st.header("9. Ética, limitações e monitoramento")
 
     st.markdown(
         """
-        O projeto utiliza dados públicos e anonimizados, respeitando princípios da **Lei Geral de Proteção
-        de Dados Pessoais (LGPD)**. Mesmo assim, é necessário considerar cuidados na interpretação dos
-        resultados, principalmente por se tratar de um tema sensível de saúde pública.
+        Esta seção apresenta os principais cuidados éticos, limitações metodológicas e necessidades
+        de monitoramento associadas ao uso de modelos de aprendizado de máquina em dados de saúde pública.
         """
     )
 
-    st.subheader("Principais cuidados")
+    # =========================
+    # LGPD e dados públicos
+    # =========================
+
+    st.subheader("Uso de dados públicos e LGPD")
 
     st.markdown(
         """
-        - O modelo não deve ser utilizado como ferramenta de diagnóstico individual.
-        - Os resultados devem ser interpretados em conjunto com análises epidemiológicas.
-        - A base apresenta desbalanceamento entre as classes.
-        - Registros administrativos podem conter inconsistências, ausências ou diferenças de preenchimento.
-        - A variável município pode refletir desigualdades territoriais e de acesso aos serviços.
-        - Há risco de viés algorítmico caso os dados históricos reproduzam desigualdades sociais existentes.
+        O projeto utiliza dados públicos disponibilizados por sistemas oficiais de informação em saúde,
+        especialmente SIM e SINASC. A análise foi conduzida com dados agregados e sem identificação
+        direta dos indivíduos.
+
+        Mesmo utilizando dados públicos, é necessário respeitar princípios da Lei Geral de Proteção
+        de Dados Pessoais, como finalidade, necessidade, transparência e segurança no tratamento das
+        informações.
         """
     )
 
-    st.subheader("Uso adequado do sistema")
+    st.info(
+        """
+        O dashboard não deve expor informações individualizadas, nomes, documentos ou qualquer elemento
+        que permita identificar pessoas específicas.
+        """
+    )
+
+    # =========================
+    # Uso responsável do modelo
+    # =========================
+
+    st.subheader("Uso responsável do modelo")
 
     st.markdown(
         """
-        O sistema deve ser entendido como uma ferramenta complementar de apoio à análise epidemiológica
-        e à vigilância em saúde pública. Sua principal contribuição está em organizar dados, apresentar
-        indicadores, apoiar a identificação de padrões e contribuir para o planejamento de ações voltadas
-        à redução da mortalidade infantil.
+        O modelo XGBoost V2 foi desenvolvido com finalidade acadêmica e exploratória. Ele estima a
+        probabilidade de associação de um registro ao óbito infantil com base em padrões históricos
+        observados na base integrada.
+
+        Portanto, os resultados não devem ser utilizados como diagnóstico clínico, decisão individual
+        em saúde ou substituição da avaliação de profissionais e gestores públicos.
+        """
+    )
+
+    responsabilidades = pd.DataFrame({
+        "Ponto de atenção": [
+            "Diagnóstico individual",
+            "Decisão clínica",
+            "Gestão pública",
+            "Interpretação dos resultados",
+            "Comunicação dos achados"
+        ],
+        "Orientação": [
+            "O modelo não deve ser usado para diagnosticar casos individuais.",
+            "O resultado não substitui avaliação profissional ou protocolos oficiais.",
+            "Os achados podem apoiar análises agregadas e planejamento em saúde pública.",
+            "As probabilidades devem ser interpretadas com cautela.",
+            "A comunicação deve evitar conclusões determinísticas ou culpabilização de grupos."
+        ]
+    })
+
+    st.dataframe(
+        responsabilidades,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    # =========================
+    # Viés algorítmico
+    # =========================
+
+    st.subheader("Viés algorítmico e desigualdades territoriais")
+
+    st.markdown(
+        """
+        Modelos de aprendizado de máquina podem reproduzir desigualdades presentes nos dados históricos.
+        No contexto da mortalidade infantil, diferenças territoriais, socioeconômicas, assistenciais e
+        de qualidade do registro podem influenciar os resultados.
+
+        Por isso, variáveis como município de residência, peso ao nascer, idade materna e duração da
+        gestação devem ser interpretadas como fatores associados ao padrão observado, e não como causas
+        isoladas ou determinísticas.
+        """
+    )
+
+    st.warning(
+        """
+        Um risco importante é transformar desigualdades históricas em classificações automáticas sem
+        considerar o contexto social, territorial e assistencial.
+        """
+    )
+
+    # =========================
+    # Limitações metodológicas
+    # =========================
+
+    st.subheader("Limitações metodológicas")
+
+    limitacoes = pd.DataFrame({
+        "Limitação": [
+            "Dados administrativos",
+            "Qualidade do preenchimento",
+            "Pareamento determinístico",
+            "Desbalanceamento da base",
+            "Ausência de variáveis clínicas detalhadas",
+            "Ano de 2014 removido",
+            "Modelo não temporal"
+        ],
+        "Descrição": [
+            "Os dados dependem da qualidade dos registros nos sistemas oficiais.",
+            "Campos ausentes, ignorados ou inconsistentes podem afetar a análise.",
+            "A integração SIM/SINASC pode não capturar todos os vínculos possíveis.",
+            "A classe óbito infantil é minoritária, exigindo métricas além da acurácia.",
+            "A base não contém todos os fatores clínicos e sociais que influenciam o fenômeno.",
+            "O ano de 2014 foi tratado como outlier técnico e removido da modelagem.",
+            "O XGBoost não é um modelo específico de previsão temporal."
+        ]
+    })
+
+    st.dataframe(
+        limitacoes,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    # =========================
+    # Monitoramento e drift
+    # =========================
+
+    st.subheader("Monitoramento e drift")
+
+    st.markdown(
+        """
+        Caso o modelo fosse utilizado em um ambiente real, seria necessário monitorar continuamente
+        seu desempenho e a distribuição dos dados de entrada. Mudanças no perfil dos nascimentos,
+        nas características dos registros ou na qualidade do preenchimento podem causar o chamado
+        **drift de dados**.
+        """
+    )
+
+    monitoramento = pd.DataFrame({
+        "Elemento monitorado": [
+            "Distribuição das variáveis",
+            "Proporção da classe óbito infantil",
+            "Desempenho do modelo",
+            "Dados ausentes ou ignorados",
+            "Mudanças territoriais",
+            "Atualização dos dados"
+        ],
+        "Exemplo de acompanhamento": [
+            "Comparar peso, gestação, idade materna e município ao longo dos anos.",
+            "Verificar se a taxa observada muda de forma relevante.",
+            "Reavaliar AUC-ROC, recall, precision, F1-score e Average Precision.",
+            "Acompanhar crescimento de campos ignorados ou incompletos.",
+            "Observar alterações no padrão dos municípios.",
+            "Retreinar o modelo com novos anos do SIM e SINASC."
+        ]
+    })
+
+    st.dataframe(
+        monitoramento,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.info(
+        """
+        O monitoramento é fundamental para garantir que o modelo continue coerente com os dados mais
+        recentes e não passe a produzir resultados pouco confiáveis após mudanças no padrão dos registros.
+        """
+    )
+
+    # =========================
+    # Recomendações futuras
+    # =========================
+
+    st.subheader("Recomendações futuras")
+
+    st.markdown(
+        """
+        Como evolução do projeto, recomenda-se:
+
+        - Atualizar periodicamente a base com novos anos do SIM e SINASC;
+        - Realizar validação temporal do modelo;
+        - Testar métodos específicos de séries temporais;
+        - Avaliar estratégias adicionais para lidar com desbalanceamento;
+        - Ampliar a análise de interpretabilidade;
+        - Documentar versões da base, do modelo e dos experimentos;
+        - Explorar ferramentas como MLflow, DVC ou GitHub Actions para MLOps.
+        """
+    )
+
+    st.success(
+        """
+        Esta seção reforça que o modelo deve ser utilizado com responsabilidade, transparência e
+        consciência das limitações dos dados e do contexto social da mortalidade infantil.
         """
     )
 
