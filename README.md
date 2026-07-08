@@ -69,7 +69,7 @@ Projeto_NAP2/
 No terminal, execute:
 
 ```bash
-git clone LINK_DO_REPOSITORIO
+git clone https://github.com/lEduardoReis/projeto-nap2-mortalidade-infantil-para.git
 ```
 
 Depois entre na pasta do projeto:
