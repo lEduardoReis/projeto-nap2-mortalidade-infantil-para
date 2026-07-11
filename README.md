@@ -319,8 +319,4 @@ Gerar cenários do simulador:
 python scripts/testar_cenarios.py
 ```
 
-## Autores
 
-Eduardo Gabriel Reis Farias
-
-Universidade Federal Rural da Amazônia — UFRA
