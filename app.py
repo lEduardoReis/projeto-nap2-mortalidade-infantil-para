@@ -1954,7 +1954,7 @@ Projeto_NAP2/
 
 elif pagina == "Ética e limitações":
 
-    st.header("9. Ética, limitações e monitoramento")
+    st.header("8. Ética, limitações e monitoramento")
 
     st.markdown(
         """
